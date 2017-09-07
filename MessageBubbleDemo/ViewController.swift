@@ -51,7 +51,8 @@ extension ViewController: UITableViewDataSource {
         }
         
         let message = messages[indexPath.row]
-        cell.configure(withMessage: message)
+        let currentUserIsSender = indexPath.row % 2 == 0
+        cell.configure(withMessage: message, currentUserIsSender: currentUserIsSender)
         return cell
     }
     

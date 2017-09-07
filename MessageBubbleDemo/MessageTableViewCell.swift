@@ -25,8 +25,10 @@ class MessageTableViewCell: UITableViewCell {
     
     // MARK: Public Methods
     
-    func configure(withMessage message: String) {
+    func configure(withMessage message: String, currentUserIsSender: Bool) {
         messageLabel.text = message
+        messageContainerView.currentUserIsSender = currentUserIsSender
     }
     
 }
+

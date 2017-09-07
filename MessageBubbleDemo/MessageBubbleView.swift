@@ -10,9 +10,41 @@ import UIKit
 
 class MessageBubbleView: UIView {
     
+    // MARK: Lifecycle
+    
     override func draw(_ rect: CGRect) {
-        super.draw(rect)
-        //Delete call to super and custom drawing code will go here
+        let bezierPath = UIBezierPath()
+        
+        //Draw main body
+        bezierPath.move(to: CGPoint(x: rect.minX, y: rect.minY))
+        bezierPath.addLine(to: CGPoint(x: rect.maxX, y: rect.minY))
+        bezierPath.addLine(to: CGPoint(x: rect.maxX, y: rect.maxY - 10.0))
+        bezierPath.addLine(to: CGPoint(x: rect.minX, y: rect.maxY - 10.0))
+        bezierPath.addLine(to: CGPoint(x: rect.minX, y: rect.minY))
+        
+        
+        //Draw the tail
+        if currentUserIsSender {
+            bezierPath.move(to: CGPoint(x: rect.maxX - 25.0, y: rect.maxY - 10.0))
+            bezierPath.addLine(to: CGPoint(x: rect.maxX - 10.0, y: rect.maxY))
+            bezierPath.addLine(to: CGPoint(x: rect.maxX - 10.0, y: rect.maxY - 10.0))
+        } else {
+            bezierPath.move(to: CGPoint(x: rect.minX + 25.0, y: rect.maxY - 10.0))
+            bezierPath.addLine(to: CGPoint(x: rect.minX + 10.0, y: rect.maxY))
+            bezierPath.addLine(to: CGPoint(x: rect.minX + 10.0, y: rect.maxY - 10.0))
+        }     
+        
+        UIColor.lightGray.setFill()
+        bezierPath.fill()
+        bezierPath.close()
+    }
+    
+    // MARK: Custom Accessors
+    
+    var currentUserIsSender = true {
+        didSet {
+            setNeedsDisplay()
+        }
     }
     
 }
